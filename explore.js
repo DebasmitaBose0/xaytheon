@@ -283,15 +283,22 @@ import { calculateTrendScore } from "./trendScore.js";
     });
   }
 
-  // ---------- GRAPH ----------
+// ---------- GRAPH ----------
   function renderGraph() {
+    // Clear previous graph content
     svg.selectAll("*").remove();
 
     const g = svg.append("g");
+    
+    // Select the professional tooltip element
+    const tooltip = d3.select("#graph-tooltip");
+
+    // Standard zoom behavior
     svg.call(d3.zoom().on("zoom", e => g.attr("transform", e.transform)));
 
     const nodeArr = Array.from(nodes.values());
 
+    // Render links (lines)
     const linkSel = g.append("g")
       .attr("stroke", "rgba(0,0,0,0.25)")
       .selectAll("line")
@@ -299,6 +306,7 @@ import { calculateTrendScore } from "./trendScore.js";
       .enter()
       .append("line");
 
+    // Render nodes (circles)
     const nodeSel = g.append("g")
       .selectAll("circle")
       .data(nodeArr, d => d.id)
@@ -308,10 +316,31 @@ import { calculateTrendScore } from "./trendScore.js";
       .attr("fill", nodeColor)
       .attr("stroke", "#fff")
       .style("cursor", "pointer")
+      // --- ENHANCED TOOLTIP LOGIC FOR ISSUE #573 ---
+      .on("mouseover", function(event, d) {
+        tooltip.classed("visible", true);
+        tooltip.html(`
+          <strong>${d.label}</strong>
+          <span style="display:block; font-size: 0.8rem; opacity: 0.7;">
+            ${d.type === "topic" ? "🏷️ Topic" : "📦 Repository"}
+          </span>
+          ${d.url ? `<div style="margin-top: 5px; font-size: 0.7rem; color: #0ea5e9; word-break: break-all;">${d.url}</div>` : ''}
+        `);
+      })
+      .on("mousemove", function(event) {
+        // Use d3.pointer relative to the body to ensure exact cursor tracking
+        // and prevent the label from "detaching" during zoom or scroll
+        const [x, y] = d3.pointer(event, document.body);
+        tooltip
+          .style("left", (x + 15) + "px")
+          .style("top", (y - 40) + "px");
+      })
+      .on("mouseleave", function() {
+        tooltip.classed("visible", false);
+      })
       .on("click", debouncedNodeClick);
 
-    nodeSel.append("title").text(d => d.label);
-
+    // Simulation logic for force-directed layout
     sim = d3.forceSimulation(nodeArr)
       .force("charge", d3.forceManyBody().strength(d => d.type === "topic" ? -120 : -40))
       .force("link", d3.forceLink(links).id(d => d.id).distance(70))

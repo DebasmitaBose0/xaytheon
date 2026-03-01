@@ -19,6 +19,69 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
   <style>
+    .filter-action-bar {
+  max-width: 900px; /* Constrain horizontal stretch */
+  margin: 0 auto 1.5rem; /* Center the form */
+  /* Keep existing styles: background, border, padding... */
+}
+
+/* Make grid columns fixed instead of filling all space */
+.filter-action-bar .github-form {
+  display: flex; /* Switch to flex for better control of compact items */
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.filter-action-bar .field-group {
+  width: 250px; /* Give inputs a reasonable, consistent width */
+}
+
+.action-row {
+  justify-content: center; /* Center buttons below the constrained form */
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.action-row .btn-outline {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+}
+/* Professional Graph Tooltip Styles */
+.graph-tooltip {
+  position: absolute;
+  background: rgba(15, 23, 42, 0.98); /* Matches your dark theme */
+  border: 1px solid #0ea5e9;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.875rem;
+  color: #e0e0e0;
+  pointer-events: none; /* Prevents the tooltip from interfering with mouse events */
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
+  z-index: 1000;
+  max-width: 250px;
+}
+
+.graph-tooltip.visible {
+  opacity: 1;
+}
+
+.graph-tooltip strong {
+  display: block;
+  color: #0ea5e9;
+  margin-bottom: 4px;
+  font-size: 0.95rem;
+}
+
+/* Ensure the container is the relative anchor */
+#graph-wrap {
+  position: relative;
+  overflow: hidden;
+}
     /* Enhanced styles for the redesigned Topic Map page */
     .topic-explore-hero {
       text-align: center;

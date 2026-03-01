@@ -313,5 +313,34 @@
     }
 }
 
-/* =====================================================
-   PAGE LAYOUT
+        /* In heatmap.css */
+.stat-row {
+    display: grid;
+    grid-template-columns: 1fr 120px; /* Fixed width for values ensures alignment */
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stat-value {
+    text-align: right; /* Values align neatly in a vertical column */
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+.insights-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    max-width: 1000px; /* Keep cards from becoming too wide on large monitors */
+    margin: 0 auto;
+}
+.stat-value:empty::before, 
+.stat-value:contains("-") {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    content: "Calculating..."; /* More professional than a dash */
+    font-style: italic;
+}
+.topic-explore-hero {
+  padding: 100px 0 2rem; /* Increase top padding for the fixed header */
+}
