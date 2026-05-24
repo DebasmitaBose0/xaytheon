@@ -31,6 +31,8 @@ var renderer;  // Draws everything onto the HTML canvas
 var currentMesh;   // The current primitive shape (cube, sphere, etc.)
 var currentModel;  // The current loaded 3D model (.glb file)
 
+var lastFetchedEvents = null;  // Stores the last fetched events for theme-aware chart reloads
+
 var autoRotationSpeed = 0.005;  // How fast the shape spins
 var isAutoRotating    = true;   // Whether auto-spin is on
 
@@ -467,6 +469,10 @@ async function loadGithubDashboard(username) {
       'https://api.github.com/users/' + encodeURIComponent(username) +
       '/events/public?per_page=25'
     );
+
+    // Save for theme toggle reload
+    lastFetchedEvents = events; 
+
     renderActivity(events.slice(0, 10));
 
     // --- Step 4: Show contributions chart ---
@@ -631,8 +637,9 @@ function showContributionsChart(username, events) {
     if (noteEl) noteEl.textContent = 'Approximate heatmap based on recent public activity.';
   };
 
-  // Set src last so the browser starts loading only after handlers are in place.
-  chartImg.src = 'https://ghchart.rshah.org/' + encodeURIComponent(username);
+// Set src last so the browser starts loading only after handlers are in place.
+var theme = document.documentElement.getAttribute('data-theme') || 'light';
+chartImg.src = 'https://kusa-image.deno.dev/' + encodeURIComponent(username) + '?theme=' + theme;
 
   // Safety net: if the browser resolved the image from cache synchronously
   // before onload could fire, manually trigger the appropriate handler.
@@ -689,6 +696,9 @@ function buildHeatmapFromEvents(events) {
 
   // GitHub-style green color palette: 0 events = light, max events = dark green
   var colors = ['#ebedf0', '#c6e48b', '#7bc96f', '#239a3b', '#196127'];
+  if (document.documentElement.getAttribute('data-theme') === 'dark') {
+    colors[0] = '#2d333b';
+}
 
   // Calculate grid dimensions
   var cellSize  = 10;
