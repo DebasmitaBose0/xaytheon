@@ -208,7 +208,7 @@ function addMouseEffects() {
 // ============================================================
 // PART 2 — DATE-RANGE FILTER UI
 // ============================================================
-
+ 
 /**
  * Inject the date-range filter bar into the GitHub Dashboard section.
  * Called once from initGithubDashboard() after the form is found.
@@ -221,14 +221,14 @@ function injectDateFilterStyles() {
     '#gh-date-filter-bar, #contrib-date-filter-bar {',
     '  width: 100%; margin: 0 0 24px 0; position: relative; z-index: 2;',
     '}',
-
+ 
     '#gh-date-filter-bar .xf-bar, #contrib-date-filter-bar .xf-bar {',
     '  display: flex !important; flex-wrap: wrap !important; align-items: center !important;',
     '  gap: 10px !important; padding: 14px 20px 14px 24px !important;',
     '  border-radius: 14px !important; position: relative !important;',
     '  border-left: 3px solid #0ea5e9 !important;',
     '}',
-
+ 
     '#gh-date-filter-bar .xf-label, #contrib-date-filter-bar .xf-label {',
     '  font-size: 11px !important; font-weight: 800 !important; letter-spacing: 1.2px !important;',
     '  text-transform: uppercase !important; color: #0ea5e9 !important;',
@@ -236,15 +236,15 @@ function injectDateFilterStyles() {
     '  background: none !important; border: none !important; padding: 0 !important;',
     '  box-shadow: none !important; margin: 0 !important; opacity: 1 !important;',
     '}',
-
+ 
     '#gh-date-filter-bar .xf-div, #contrib-date-filter-bar .xf-div {',
     '  width: 1px !important; height: 20px !important; opacity: 0.3 !important; flex-shrink: 0 !important;',
     '}',
-
+ 
     '#gh-date-filter-bar .xf-presets, #contrib-date-filter-bar .xf-presets {',
     '  display: flex !important; flex-wrap: wrap !important; gap: 5px !important; align-items: center !important;',
     '}',
-
+ 
     '#gh-date-filter-bar .xf-btn, #contrib-date-filter-bar .xf-btn {',
     '  display: inline-block !important; padding: 6px 14px !important;',
     '  font-size: 12.5px !important; font-family: inherit !important; font-weight: 700 !important;',
@@ -267,14 +267,14 @@ function injectDateFilterStyles() {
     '  color: #fff !important; box-shadow: 0 2px 10px rgba(14,165,233,0.4) !important;',
     '  transform: translateY(-1px) !important; opacity: 1 !important;',
     '}',
-
+ 
     '#gh-date-filter-bar .xf-badge, #contrib-date-filter-bar .xf-badge {',
     '  display: inline-flex !important; align-items: center !important; gap: 6px !important;',
     '  padding: 5px 12px !important; font-size: 12px !important; font-weight: 700 !important;',
     '  background: rgba(14,165,233,0.12) !important; border: 1px solid rgba(14,165,233,0.35) !important;',
     '  border-radius: 999px !important; color: #0ea5e9 !important; white-space: nowrap !important;',
     '}',
-
+ 
     '#gh-date-filter-bar .xf-clear, #contrib-date-filter-bar .xf-clear {',
     '  display: inline-flex !important; align-items: center !important; justify-content: center !important;',
     '  width: 16px !important; height: 16px !important; border-radius: 50% !important;',
@@ -285,13 +285,13 @@ function injectDateFilterStyles() {
     '#gh-date-filter-bar .xf-clear::before, #contrib-date-filter-bar .xf-clear::before {',
     '  display: none !important;',
     '}',
-
+ 
     '#gh-date-filter-bar .xf-custom, #contrib-date-filter-bar .xf-custom {',
     '  width: 100% !important; display: flex !important; flex-wrap: wrap !important;',
     '  align-items: flex-end !important; gap: 10px !important;',
     '  padding-top: 12px !important; border-top: 1px dashed rgba(14,165,233,0.3) !important;',
     '}',
-
+ 
     '#gh-date-filter-bar .xf-inp-wrap, #contrib-date-filter-bar .xf-inp-wrap {',
     '  display: flex !important; flex-direction: column !important; gap: 4px !important;',
     '}',
@@ -304,7 +304,7 @@ function injectDateFilterStyles() {
     '  border-radius: 8px !important; outline: none !important;',
     '  min-width: 148px !important; line-height: 1.4 !important; opacity: 1 !important;',
     '}',
-
+ 
     '#gh-date-filter-bar .xf-apply, #contrib-date-filter-bar .xf-apply {',
     '  padding: 8px 20px !important; font-size: 13px !important; font-family: inherit !important;',
     '  font-weight: 800 !important; border-radius: 8px !important; border: none !important;',
@@ -318,7 +318,7 @@ function injectDateFilterStyles() {
     '#gh-date-filter-bar .xf-apply:hover, #contrib-date-filter-bar .xf-apply:hover {',
     '  opacity: 0.85 !important; transform: translateY(-1px) !important;',
     '}',
-
+ 
     '#gh-filtered-count, #contrib-filter-count {',
     '  font-size: 12px !important; opacity: 0.5 !important; text-align: right !important;',
     '  margin: -16px 0 16px !important; font-style: italic !important;',
@@ -326,24 +326,24 @@ function injectDateFilterStyles() {
   ].join('\n');
   document.head.appendChild(style);
 }
-
+ 
 function injectDateFilterBar() {
   var form = document.getElementById('github-form');
   if (!form) return;
-
+ 
   // Inject styles via JS — bypasses all CSS file loading issues
   injectDateFilterStyles();
-
+ 
   // Detect theme for dynamic colors
   var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
   var bgColor     = isDark ? '#0d1117' : '#ffffff';
   var borderColor = isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)';
   var textColor   = isDark ? '#ffffff' : '#000000';
   var divColor    = isDark ? '#ffffff' : '#000000';
-
+ 
   var bar = document.createElement('div');
   bar.id = 'gh-date-filter-bar';
-
+ 
   var barDiv = document.createElement('div');
   barDiv.className = 'xf-bar';
   barDiv.style.cssText = [
@@ -351,7 +351,7 @@ function injectDateFilterBar() {
     'border:1px solid ' + borderColor,
     'box-shadow: 0 2px 12px rgba(0,0,0,0.08)',
   ].join(';');
-
+ 
   barDiv.innerHTML = [
     '<span class="xf-label">Filter range</span>',
     '<div class="xf-div" style="background:' + divColor + '"></div>',
@@ -361,6 +361,7 @@ function injectDateFilterBar() {
     '  <button class="xf-btn" style="border:1px solid ' + borderColor + '" data-days="30">30 days</button>',
     '  <button class="xf-btn" style="border:1px solid ' + borderColor + '" data-days="90">3 months</button>',
     '  <button class="xf-btn" style="border:1px solid ' + borderColor + '" data-days="365">1 year</button>',
+    '  <button class="xf-btn" style="border:1px solid ' + borderColor + '" data-days="custom">Custom ↓</button>',
     '</div>',
     '<div class="xf-badge" id="gh-filter-badge" style="display:none">',
     '  <span id="gh-filter-badge-text"></span>',
@@ -378,9 +379,9 @@ function injectDateFilterBar() {
     '  <button class="xf-apply" id="gh-date-apply">Apply</button>',
     '</div>',
   ].join('\n');
-
+ 
   bar.appendChild(barDiv);
-
+ 
   // Insert BEFORE the github-grid
   var grid = document.querySelector('.github-grid');
   if (grid) {
@@ -388,7 +389,7 @@ function injectDateFilterBar() {
   } else {
     form.parentNode.insertBefore(bar, form.nextSibling);
   }
-
+ 
   // Wire up preset buttons
   bar.querySelectorAll('.xf-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
@@ -397,17 +398,17 @@ function injectDateFilterBar() {
       btn.style.background = '#0ea5e9';
       btn.style.color = '#fff';
       btn.style.borderColor = '#0ea5e9';
-
+ 
       var days = btn.getAttribute('data-days');
       var customRange = document.getElementById('gh-custom-range');
-
+ 
       if (days === 'custom') {
         customRange.style.display = 'flex';
         return;
       }
-
+ 
       customRange.style.display = 'none';
-
+ 
       if (days === '0') {
         ghDateFilter = { start: null, end: null };
         updateFilterBadge(null, null);
@@ -417,16 +418,16 @@ function injectDateFilterBar() {
         ghDateFilter = { start: start, end: end };
         updateFilterBadge(start, end);
       }
-
+ 
       applyDateFilterAndRender();
     });
   });
-
+ 
   // Wire up custom range apply
   document.getElementById('gh-date-apply').addEventListener('click', function() {
     var startVal = document.getElementById('gh-date-start').value;
     var endVal   = document.getElementById('gh-date-end').value;
-
+ 
     if (!startVal && !endVal) {
       ghDateFilter = { start: null, end: null };
       updateFilterBadge(null, null);
@@ -440,10 +441,10 @@ function injectDateFilterBar() {
       ghDateFilter = { start: start, end: end };
       updateFilterBadge(start, end);
     }
-
+ 
     applyDateFilterAndRender();
   });
-
+ 
   // Wire up clear button
   document.getElementById('gh-date-clear-filter').addEventListener('click', function() {
     ghDateFilter = { start: null, end: null };
@@ -455,31 +456,31 @@ function injectDateFilterBar() {
     applyDateFilterAndRender();
   });
 }
-
+ 
 /** Update the "active filter" badge text */
 function updateFilterBadge(start, end) {
   var badge    = document.getElementById('gh-filter-badge');
   var badgeTxt = document.getElementById('gh-filter-badge-text');
   if (!badge || !badgeTxt) return;
-
+ 
   if (!start && !end) {
     badge.style.display = 'none';
     badgeTxt.textContent = '';
     return;
   }
-
+ 
   var fmt = function(d) {
     return d ? d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : '…';
   };
   badgeTxt.textContent = fmt(start) + ' → ' + fmt(end);
   badge.style.display = 'inline-flex';
 }
-
+ 
 /** Filter an array of GitHub events by the current ghDateFilter */
 function filterEventsByDate(events) {
   if (!events) return [];
   if (!ghDateFilter.start && !ghDateFilter.end) return events;
-
+ 
   return events.filter(function(ev) {
     if (!ev.created_at) return true;
     var d = new Date(ev.created_at);
@@ -488,12 +489,12 @@ function filterEventsByDate(events) {
     return true;
   });
 }
-
+ 
 /** Filter an array of repos by the current ghDateFilter (uses updated_at) */
 function filterReposByDate(repos) {
   if (!repos) return [];
   if (!ghDateFilter.start && !ghDateFilter.end) return repos;
-
+ 
   return repos.filter(function(repo) {
     var d = new Date(repo.updated_at || repo.pushed_at || repo.created_at);
     if (ghDateFilter.start && d < ghDateFilter.start) return false;
@@ -501,14 +502,14 @@ function filterReposByDate(repos) {
     return true;
   });
 }
-
+ 
 /** Re-render dashboard cards using cached data + current filter */
 function applyDateFilterAndRender() {
   if (!lastFetchedEvents && !lastFetchedRepos) return;
-
+ 
   var filteredEvents = filterEventsByDate(lastFetchedEvents || []);
   var filteredRepos  = filterReposByDate(lastFetchedRepos  || []);
-
+ 
   // Update activity count badge
   var countBadge = document.getElementById('gh-filtered-count');
   if (countBadge) {
@@ -518,7 +519,7 @@ function applyDateFilterAndRender() {
       ? filtered + ' / ' + total + ' events in range'
       : '';
   }
-
+ 
   renderRepos(filteredRepos.slice(0, 8));
   renderActivity(filteredEvents.slice(0, 10));
   showContributionsChart(
@@ -1001,7 +1002,424 @@ function timeAgo(dateString) {
 
 
 // ============================================================
-// PART 6 — START EVERYTHING
+// PART 6 — DEVELOPER COMPARISON MODE
+// ============================================================
+
+var cmpData = { left: null, right: null };  // cached fetched data for both sides
+
+function injectCompareStyles() {
+  if (document.getElementById('xaytheon-compare-styles')) return;
+  var s = document.createElement('style');
+  s.id = 'xaytheon-compare-styles';
+  s.textContent = [
+    /* ── Toggle button ─────────────────────────────────────── */
+    '#gh-compare-toggle { display:inline-flex !important; align-items:center !important; gap:7px !important; padding:9px 18px !important; font-size:13px !important; font-family:inherit !important; font-weight:700 !important; border-radius:10px !important; cursor:pointer !important; border:1.5px solid rgba(14,165,233,0.5) !important; background:transparent !important; color:#0ea5e9 !important; opacity:1 !important; transition:all 0.15s !important; margin-top:12px !important; }',
+    '#gh-compare-toggle::before { display:none !important; }',
+    '#gh-compare-toggle:hover { background:rgba(14,165,233,0.08) !important; border-color:#0ea5e9 !important; }',
+    '#gh-compare-toggle.cmp-active { background:#0ea5e9 !important; color:#fff !important; border-color:#0ea5e9 !important; box-shadow:0 2px 12px rgba(14,165,233,0.3) !important; }',
+
+    /* ── Second input row ──────────────────────────────────── */
+    '#gh-compare-input-row { display:none; margin-top:14px; gap:12px; align-items:flex-end; flex-wrap:wrap; padding:16px 20px; border-radius:12px; border:1px dashed rgba(14,165,233,0.3); background:rgba(14,165,233,0.04); }',
+    '#gh-compare-input-row.cmp-visible { display:flex !important; }',
+    '#gh-compare-input-row label { font-size:11px !important; font-weight:800 !important; letter-spacing:1px !important; text-transform:uppercase !important; color:#0ea5e9 !important; display:block !important; margin-bottom:5px !important; }',
+    '#gh-compare-input-row input { padding:11px 14px !important; font-size:14px !important; font-family:inherit !important; border-radius:9px !important; outline:none !important; min-width:220px !important; opacity:1 !important; transition:border-color 0.15s, box-shadow 0.15s !important; }',
+    '#gh-compare-input-row input:focus { border-color:#0ea5e9 !important; box-shadow:0 0 0 3px rgba(14,165,233,0.15) !important; }',
+    '#gh-compare-btn { padding:11px 22px !important; font-size:13px !important; font-family:inherit !important; font-weight:800 !important; border-radius:9px !important; border:none !important; background:linear-gradient(135deg,#0ea5e9,#38bdf8) !important; color:#fff !important; cursor:pointer !important; opacity:1 !important; white-space:nowrap !important; box-shadow:0 2px 10px rgba(14,165,233,0.3) !important; transition:opacity 0.15s,transform 0.1s !important; }',
+    '#gh-compare-btn::before { display:none !important; }',
+    '#gh-compare-btn:hover { opacity:0.88 !important; transform:translateY(-1px) !important; }',
+
+    /* ── Compare panel ─────────────────────────────────────── */
+    '#gh-compare-panel { display:none; margin-bottom:32px; }',
+    '#gh-compare-panel.cmp-visible { display:block !important; }',
+
+    /* ── Header ────────────────────────────────────────────── */
+    '#gh-compare-header { display:flex; align-items:center; gap:12px; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid rgba(14,165,233,0.15); }',
+    '#gh-compare-header h3 { font-size:16px; font-weight:900; letter-spacing:0.5px; margin:0; }',
+    '#gh-compare-vs-badge { display:inline-flex; align-items:center; justify-content:center; padding:4px 10px; border-radius:999px; background:linear-gradient(135deg,#0ea5e9,#f59e0b); color:#fff; font-size:11px; font-weight:900; letter-spacing:1px; }',
+
+    /* ── Grid ──────────────────────────────────────────────── */
+    '#gh-compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }',
+    '@media(max-width:700px){ #gh-compare-grid { grid-template-columns:1fr; } }',
+
+    /* ── Cards ─────────────────────────────────────────────── */
+    '.cmp-card { border-radius:16px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.08); transition:box-shadow 0.2s; }',
+    '.cmp-card:hover { box-shadow:0 8px 30px rgba(0,0,0,0.12); }',
+    '[data-theme="light"] .cmp-card { background:#ffffff; border:1px solid rgba(0,0,0,0.08); }',
+    '[data-theme="dark"]  .cmp-card { background:#0d1117; border:1px solid rgba(255,255,255,0.08); }',
+    '.cmp-card-left  { border-top:3px solid #0ea5e9; }',
+    '.cmp-card-right { border-top:3px solid #f59e0b; }',
+
+    /* ── Card header ───────────────────────────────────────── */
+    '.cmp-card-head { display:flex; align-items:flex-start; gap:14px; padding:18px 18px 12px; }',
+    '.cmp-avatar-wrap { position:relative; flex-shrink:0; }',
+    '.cmp-avatar { width:58px; height:58px; border-radius:50%; display:block; }',
+    '.cmp-avatar-ring-left  { border:3px solid #0ea5e9; }',
+    '.cmp-avatar-ring-right { border:3px solid #f59e0b; }',
+    '.cmp-name { font-size:15px; font-weight:900; line-height:1.2; margin-top:2px; }',
+    '.cmp-login { font-size:12px; margin-top:3px; }',
+    '.cmp-login a { text-decoration:none; }',
+    '.cmp-login a:hover { text-decoration:underline; }',
+    '.cmp-bio { font-size:12px; opacity:0.65; margin-top:5px; line-height:1.5; }',
+
+    /* ── Stat pills ────────────────────────────────────────── */
+    '.cmp-stats { display:flex; flex-wrap:wrap; gap:7px; padding:0 14px 14px; }',
+    '[data-theme="light"] .cmp-stat { background:#f8fafc; border:1px solid #e2e8f0; }',
+    '[data-theme="dark"]  .cmp-stat { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); }',
+    '.cmp-stat { display:flex; flex-direction:column; align-items:center; padding:9px 13px; border-radius:10px; min-width:60px; }',
+    '.cmp-stat-val { font-size:17px; font-weight:900; line-height:1.1; }',
+    '.cmp-stat-lbl { font-size:9.5px; font-weight:700; letter-spacing:0.6px; text-transform:uppercase; margin-top:3px; opacity:0.5; }',
+    '.cmp-stat-val.cmp-winner { color:#16a34a; }',
+    '.cmp-stat-val.cmp-loser  { color:#dc2626; }',
+    '[data-theme="light"] .cmp-stat-val { color:#0f172a; }',
+    '[data-theme="light"] .cmp-stat-val.cmp-winner { color:#15803d; }',
+    '[data-theme="light"] .cmp-stat-val.cmp-loser  { color:#dc2626; }',
+
+    /* ── Section label ─────────────────────────────────────── */
+    '[data-theme="light"] .cmp-section-label { color:#64748b; background:#f1f5f9; }',
+    '[data-theme="dark"]  .cmp-section-label { color:#94a3b8; background:rgba(255,255,255,0.04); }',
+    '.cmp-section-label { font-size:10px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; padding:6px 16px; margin:0; }',
+
+    /* ── Banner ────────────────────────────────────────────── */
+    '.cmp-banner { display:flex; align-items:center; justify-content:center; gap:8px; padding:9px 16px; font-size:12px; font-weight:800; border-radius:10px; margin:0 14px 14px; }',
+    '.cmp-banner-win  { background:rgba(21,128,61,0.1);  color:#15803d; border:1px solid rgba(21,128,61,0.25); }',
+    '.cmp-banner-lose { background:rgba(220,38,38,0.08); color:#dc2626; border:1px solid rgba(220,38,38,0.2); }',
+    '.cmp-banner-tie  { background:rgba(14,165,233,0.08); color:#0369a1; border:1px solid rgba(14,165,233,0.25); }',
+
+    /* ── Repo list ─────────────────────────────────────────── */
+    '.cmp-repo-list { padding:6px 12px 12px; display:grid; gap:6px; }',
+    '[data-theme="light"] .cmp-repo-item { background:#fafafa; border:1px solid #e2e8f0; }',
+    '[data-theme="dark"]  .cmp-repo-item { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); }',
+    '.cmp-repo-item { padding:9px 11px; border-radius:9px; font-size:12px; }',
+    '.cmp-repo-name { font-weight:800; }',
+    '.cmp-repo-name a { text-decoration:none; color:inherit; }',
+    '.cmp-repo-name a:hover { color:#0ea5e9; }',
+    '[data-theme="light"] .cmp-repo-meta { color:#475569; }',
+    '.cmp-repo-meta { display:flex; gap:8px; margin-top:4px; font-size:11px; opacity:0.7; }',
+
+    /* ── Activity list ─────────────────────────────────────── */
+    '.cmp-activity-list { list-style:none; padding:6px 12px 14px; display:grid; gap:5px; margin:0; }',
+    '[data-theme="light"] .cmp-activity-item { background:#fafafa; border:1px solid #e2e8f0; color:#1e293b; }',
+    '[data-theme="dark"]  .cmp-activity-item { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); }',
+    '.cmp-activity-item { padding:8px 11px; border-radius:9px; font-size:12px; }',
+    '[data-theme="light"] .cmp-activity-time { color:#64748b; }',
+    '.cmp-activity-time { font-size:11px; margin-top:3px; opacity:0.6; }',
+
+    /* ── Loading ───────────────────────────────────────────── */
+    '.cmp-loading { padding:32px 16px; text-align:center; font-size:13px; font-style:italic; opacity:0.45; }',
+
+    /* ── Head-to-head bars container ───────────────────────── */
+    '[data-theme="light"] #gh-compare-bars .cmp-h2h-wrap { background:#ffffff; border:1px solid #e2e8f0; box-shadow:0 2px 12px rgba(0,0,0,0.06); }',
+    '[data-theme="dark"]  #gh-compare-bars .cmp-h2h-wrap { background:#0d1117; border:1px solid rgba(255,255,255,0.08); box-shadow:0 2px 12px rgba(0,0,0,0.3); }',
+    '.cmp-h2h-wrap { border-radius:16px; padding:20px 24px; margin-top:4px; }',
+    '.cmp-h2h-title { font-size:11px; font-weight:900; letter-spacing:1.2px; text-transform:uppercase; opacity:0.4; margin-bottom:16px; }',
+
+    /* Legend */
+    '.cmp-h2h-legend { display:flex; gap:20px; margin-bottom:20px; }',
+    '.cmp-h2h-legend-item { display:flex; align-items:center; gap:7px; font-size:13px; font-weight:700; }',
+    '.cmp-h2h-dot { width:13px; height:13px; border-radius:4px; flex-shrink:0; }',
+
+    /* Stat row */
+    '.cmp-h2h-row { margin-bottom:18px; }',
+    '.cmp-h2h-row:last-child { margin-bottom:0; }',
+    '[data-theme="light"] .cmp-h2h-row-label { color:#475569; }',
+    '[data-theme="dark"]  .cmp-h2h-row-label { color:#94a3b8; }',
+    '.cmp-h2h-row-label { font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.7px; margin-bottom:7px; display:flex; justify-content:space-between; align-items:center; }',
+    '.cmp-h2h-row-label span { font-size:12px; font-weight:900; letter-spacing:0; text-transform:none; }',
+    '[data-theme="light"] .cmp-h2h-row-label span { color:#0f172a; }',
+    '[data-theme="dark"]  .cmp-h2h-row-label span { color:#f8fafc; }',
+
+    /* Bar tracks */
+    '.cmp-h2h-bars { display:flex; flex-direction:column; gap:5px; }',
+    '[data-theme="light"] .cmp-h2h-track { background:#f1f5f9; }',
+    '[data-theme="dark"]  .cmp-h2h-track { background:rgba(255,255,255,0.07); }',
+    '.cmp-h2h-track { border-radius:999px; height:10px; overflow:hidden; position:relative; }',
+    '.cmp-h2h-fill { height:100%; border-radius:999px; width:0%; transition:width 0.7s cubic-bezier(0.4,0,0.2,1); }',
+    '.cmp-h2h-fill-left  { background:linear-gradient(90deg,#0ea5e9,#38bdf8); }',
+    '.cmp-h2h-fill-right { background:linear-gradient(90deg,#f59e0b,#fbbf24); }',
+  ].join('\n');
+  document.head.appendChild(s);
+}
+
+function injectCompareUI() {
+  var form = document.getElementById('github-form');
+  if (!form) return;
+
+  injectCompareStyles();
+
+  var isDark      = document.documentElement.getAttribute('data-theme') === 'dark';
+  var bgColor     = isDark ? '#0d1117' : '#ffffff';
+  var borderColor = isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)';
+  var textColor   = isDark ? '#ffffff' : '#000000';
+
+  // ── Toggle button (sits after the form's existing buttons) ──
+  var toggle = document.createElement('button');
+  toggle.id = 'gh-compare-toggle';
+  toggle.innerHTML = '⇄ Compare Mode';
+  form.parentNode.insertBefore(toggle, form.nextSibling);
+
+  // ── Second username input row ──
+  var inputRow = document.createElement('div');
+  inputRow.id = 'gh-compare-input-row';
+  inputRow.innerHTML = [
+    '<div>',
+    '  <label>Compare with</label>',
+    '  <input id="gh-compare-username" type="text" placeholder="e.g. torvalds"',
+    '    style="border:1px solid ' + borderColor + ';background:' + bgColor + ';color:' + textColor + '" />',
+    '</div>',
+    '<button id="gh-compare-btn">Compare ⇄</button>',
+  ].join('');
+  form.parentNode.insertBefore(inputRow, toggle.nextSibling);
+
+  // ── Compare results panel (full-width, above the existing grid) ──
+  var panel = document.createElement('div');
+  panel.id = 'gh-compare-panel';
+  panel.innerHTML = [
+    '<div id="gh-compare-header">',
+    '  <h3>Developer Comparison</h3>',
+    '  <div id="gh-compare-vs-badge" class="cmp-vs-badge">VS</div>',
+    '</div>',
+    '<div id="gh-compare-grid">',
+    '  <div id="cmp-left"  class="cmp-card cmp-card-left"><div class="cmp-loading">Enter a username above and click Compare ⇄</div></div>',
+    '  <div id="cmp-right" class="cmp-card cmp-card-right"><div class="cmp-loading">—</div></div>',
+    '</div>',
+  ].join('');
+
+  var grid = document.querySelector('.github-grid');
+  if (grid) grid.parentNode.insertBefore(panel, grid);
+
+  // ── Wire toggle ──
+  var compareActive = false;
+  toggle.addEventListener('click', function() {
+    compareActive = !compareActive;
+    toggle.classList.toggle('cmp-active', compareActive);
+    toggle.innerHTML = compareActive ? '✕ Exit Compare' : '⇄ Compare Mode';
+    inputRow.classList.toggle('cmp-visible', compareActive);
+    if (!compareActive) {
+      panel.classList.remove('cmp-visible');
+      cmpData = { left: null, right: null };
+    }
+  });
+
+  // ── Wire compare button ──
+  document.getElementById('gh-compare-btn').addEventListener('click', function() {
+    var u1 = (document.getElementById('gh-username').value || '').trim();
+    var u2 = (document.getElementById('gh-compare-username').value || '').trim();
+    if (!u1) { alert('Please load a primary profile first.'); return; }
+    if (!u2) { alert('Please enter a username to compare with.'); return; }
+    runComparison(u1, u2);
+  });
+
+  // Also allow Enter key in the compare input
+  document.getElementById('gh-compare-username').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') document.getElementById('gh-compare-btn').click();
+  });
+}
+
+async function fetchCompareData(username) {
+  var user  = await fetchFromGitHub('https://api.github.com/users/' + encodeURIComponent(username));
+  var repos = await fetchFromGitHub('https://api.github.com/users/' + encodeURIComponent(username) + '/repos?per_page=100&sort=updated');
+  var events = await fetchFromGitHub('https://api.github.com/users/' + encodeURIComponent(username) + '/events/public?per_page=30');
+
+  var ownRepos = repos.filter(function(r) { return !r.fork; });
+  ownRepos.sort(function(a, b) { return (b.stargazers_count || 0) - (a.stargazers_count || 0); });
+
+  var totalStars = ownRepos.reduce(function(sum, r) { return sum + (r.stargazers_count || 0); }, 0);
+  var totalForks = ownRepos.reduce(function(sum, r) { return sum + (r.forks_count || 0); }, 0);
+
+  return { user: user, repos: ownRepos, events: events, totalStars: totalStars, totalForks: totalForks };
+}
+
+async function runComparison(u1, u2) {
+  var panel = document.getElementById('gh-compare-panel');
+  var leftEl  = document.getElementById('cmp-left');
+  var rightEl = document.getElementById('cmp-right');
+
+  panel.classList.add('cmp-visible');
+  leftEl.innerHTML  = '<div class="cmp-loading">Loading ' + safeHtml(u1) + '…</div>';
+  rightEl.innerHTML = '<div class="cmp-loading">Loading ' + safeHtml(u2) + '…</div>';
+
+  // Scroll panel into view
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  try {
+    var results = await Promise.all([ fetchCompareData(u1), fetchCompareData(u2) ]);
+    cmpData.left  = results[0];
+    cmpData.right = results[1];
+    renderCompareCards(cmpData.left, cmpData.right);
+  } catch (err) {
+    leftEl.innerHTML  = '<div class="cmp-loading" style="color:#f87171">' + safeHtml(err.message) + '</div>';
+    rightEl.innerHTML = '';
+  }
+}
+
+function renderCompareCards(L, R) {
+  var leftEl  = document.getElementById('cmp-left');
+  var rightEl = document.getElementById('cmp-right');
+  if (!leftEl || !rightEl) return;
+
+  leftEl.innerHTML  = buildCompareCard(L, R, 'left');
+  rightEl.innerHTML = buildCompareCard(R, L, 'right');
+
+  // Inject stat bars below the grid
+  var existing = document.getElementById('gh-compare-bars');
+  if (existing) existing.remove();
+  var barsEl = document.createElement('div');
+  barsEl.id = 'gh-compare-bars';
+  barsEl.style.cssText = 'margin-top:16px;';
+  barsEl.innerHTML = buildStatBars(L, R);
+  document.getElementById('gh-compare-grid').after(barsEl);
+
+  // Animate bars after paint
+  setTimeout(function() {
+    document.querySelectorAll('.cmp-h2h-fill[data-pct]').forEach(function(el) {
+      el.style.width = el.getAttribute('data-pct') + '%';
+    });
+  }, 60);
+}
+
+function buildCompareCard(mine, theirs, side) {
+  var u = mine.user;
+  var accentColor = side === 'left' ? '#0ea5e9' : '#f59e0b';
+
+  // Stat comparison: win = green, lose = red
+  function statClass(myVal, theirVal) {
+    if (myVal > theirVal) return 'cmp-winner';
+    if (myVal < theirVal) return 'cmp-loser';
+    return '';
+  }
+
+  var followers  = u.followers  || 0;
+  var repos      = u.public_repos || mine.repos.length;
+  var stars      = mine.totalStars;
+  var forks      = mine.totalForks;
+
+  var html = '';
+
+  // Avatar + name
+  html += '<div class="cmp-card-head">';
+  html += '<div class="cmp-avatar-wrap">';
+  html += '<img class="cmp-avatar cmp-avatar-ring-' + side + '" src="' + safeHtml(u.avatar_url) + '" alt="' + safeHtml(u.login) + '" />';
+  html += '</div>';
+  html += '<div style="min-width:0;">';
+  html += '<div class="cmp-name">' + safeHtml(u.name || u.login) + '</div>';
+  html += '<div class="cmp-login"><a href="https://github.com/' + safeHtml(u.login) + '" target="_blank" rel="noopener" style="color:' + accentColor + '">@' + safeHtml(u.login) + '</a></div>';
+  if (u.bio) html += '<div class="cmp-bio">' + safeHtml(u.bio.slice(0, 80)) + (u.bio.length > 80 ? '…' : '') + '</div>';
+  html += '</div></div>';
+
+  // Stat pills
+  html += '<div class="cmp-stats">';
+  var statItems = [
+    { val: followers,         lbl: 'Followers', other: theirs.user.followers  || 0 },
+    { val: u.following || 0,  lbl: 'Following', other: theirs.user.following  || 0 },
+    { val: repos,             lbl: 'Repos',     other: theirs.user.public_repos || theirs.repos.length },
+    { val: stars,             lbl: 'Stars',     other: theirs.totalStars },
+    { val: forks,             lbl: 'Forks',     other: theirs.totalForks },
+  ];
+  statItems.forEach(function(s) {
+    html += '<div class="cmp-stat">';
+    html += '<span class="cmp-stat-val ' + statClass(s.val, s.other) + '">' + fmtNum(s.val) + '</span>';
+    html += '<span class="cmp-stat-lbl">' + s.lbl + '</span>';
+    html += '</div>';
+  });
+  html += '</div>';
+
+  // Win/lose banner
+  var myScore    = followers + stars * 3 + forks * 2 + repos;
+  var theirScore = (theirs.user.followers || 0) + theirs.totalStars * 3 + theirs.totalForks * 2 + (theirs.user.public_repos || theirs.repos.length);
+  if (myScore > theirScore) {
+    html += '<div class="cmp-banner cmp-banner-win">🏆 Leading overall</div>';
+  } else if (myScore < theirScore) {
+    html += '<div class="cmp-banner cmp-banner-lose">📉 Trailing overall</div>';
+  } else {
+    html += '<div class="cmp-banner cmp-banner-tie">🤝 Tied overall</div>';
+  }
+
+  // Top repos
+  html += '<div class="cmp-section-label">Top Repositories</div>';
+  html += '<div class="cmp-repo-list">';
+  var topRepos = mine.repos.slice(0, 4);
+  if (topRepos.length === 0) {
+    html += '<div style="padding:8px 4px;opacity:0.5;font-size:12px;">No public repos</div>';
+  } else {
+    topRepos.forEach(function(r) {
+      html += '<div class="cmp-repo-item">';
+      html += '<div class="cmp-repo-name"><a href="' + safeHtml(r.html_url) + '" target="_blank" rel="noopener">' + safeHtml(r.name) + '</a></div>';
+      html += '<div class="cmp-repo-meta"><span>★ ' + (r.stargazers_count||0) + '</span><span>⑂ ' + (r.forks_count||0) + '</span>' + (r.language ? '<span>' + safeHtml(r.language) + '</span>' : '') + '</div>';
+      html += '</div>';
+    });
+  }
+  html += '</div>';
+
+  // Recent activity
+  html += '<div class="cmp-section-label">Recent Activity</div>';
+  html += '<ul class="cmp-activity-list">';
+  var topEvents = mine.events.slice(0, 5);
+  if (topEvents.length === 0) {
+    html += '<li style="padding:8px 4px;opacity:0.5;font-size:12px;">No recent public activity</li>';
+  } else {
+    topEvents.forEach(function(ev) {
+      html += '<li class="cmp-activity-item">';
+      html += '<div>' + safeHtml(describeEvent(ev)) + (ev.repo ? ' in <strong>' + safeHtml(ev.repo.name) + '</strong>' : '') + '</div>';
+      html += '<div class="cmp-activity-time">' + timeAgo(ev.created_at) + '</div>';
+      html += '</li>';
+    });
+  }
+  html += '</ul>';
+
+  return html;
+}
+
+function buildStatBars(L, R) {
+  var stats = [
+    { lbl: 'Followers', lv: L.user.followers||0,                        rv: R.user.followers||0 },
+    { lbl: 'Repos',     lv: L.user.public_repos||L.repos.length,        rv: R.user.public_repos||R.repos.length },
+    { lbl: 'Stars',     lv: L.totalStars,                                rv: R.totalStars },
+    { lbl: 'Forks',     lv: L.totalForks,                                rv: R.totalForks },
+  ];
+
+  var html = '<div class="cmp-h2h-wrap">';
+
+  html += '<div class="cmp-h2h-title">Head-to-Head</div>';
+
+  // Legend
+  html += '<div class="cmp-h2h-legend">';
+  html += '<div class="cmp-h2h-legend-item"><div class="cmp-h2h-dot" style="background:#0ea5e9"></div>' + safeHtml(L.user.login) + '</div>';
+  html += '<div class="cmp-h2h-legend-item"><div class="cmp-h2h-dot" style="background:#f59e0b"></div>' + safeHtml(R.user.login) + '</div>';
+  html += '</div>';
+
+  stats.forEach(function(s) {
+    var maxVal = Math.max(s.lv, s.rv, 1);
+    var lPct   = Math.round((s.lv / maxVal) * 100);
+    var rPct   = Math.round((s.rv / maxVal) * 100);
+    var winner = s.lv > s.rv ? 'left' : s.rv > s.lv ? 'right' : 'tie';
+
+    html += '<div class="cmp-h2h-row">';
+    html += '<div class="cmp-h2h-row-label">';
+    html += s.lbl;
+    html += '<span>' + fmtNum(s.lv) + ' <span style="opacity:0.35;font-weight:500;font-size:11px;">vs</span> ' + fmtNum(s.rv) + (winner !== 'tie' ? ' ' + (winner === 'left' ? '🔵' : '🟡') : '') + '</span>';
+    html += '</div>';
+    html += '<div class="cmp-h2h-bars">';
+    // Left bar
+    html += '<div class="cmp-h2h-track"><div class="cmp-h2h-fill cmp-h2h-fill-left" data-pct="' + lPct + '" style="width:0%"></div></div>';
+    // Right bar
+    html += '<div class="cmp-h2h-track"><div class="cmp-h2h-fill cmp-h2h-fill-right" data-pct="' + rPct + '" style="width:0%"></div></div>';
+    html += '</div>';
+    html += '</div>';
+  });
+
+  html += '</div>';
+  return html;
+}
+
+function fmtNum(n) {
+  if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+  if (n >= 1000)    return (n / 1000).toFixed(1) + 'k';
+  return String(n);
+}
+
+
+// ============================================================
+// PART 7 — START EVERYTHING
 // ============================================================
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -1010,4 +1428,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
   initGithubDashboard();
   initMiniViewer();
+  injectCompareUI();
 });
