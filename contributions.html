@@ -23,7 +23,11 @@
           <li><a class="nav-link" href="explore.html">Explore by Topic</a></li>
         </ul>
         <button id="theme-toggle" class="btn btn-primary" style="margin:0px important!"></button>
-
+        <div class="hamburger" id="hamburger-menu" aria-label="Toggle navigation menu" role="button" tabindex="0">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
       </div>
     </nav>
 
@@ -121,6 +125,27 @@
 
     function updateButtonLabel(theme) {
         toggleBtn.innerHTML = theme === 'dark' ? '☀️' : '🌙';
+    }
+
+    const hamburger = document.getElementById('hamburger-menu');
+    const navMenu = document.querySelector('.nav-menu');
+
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+            hamburger.setAttribute('aria-expanded', !expanded);
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
+            });
+        });
     }
     </script>
 </body>
