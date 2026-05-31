@@ -318,7 +318,8 @@ xaytheon/
 │
 ├── docs/                    # Documentation
 │   ├── CONTRIBUTION.md
-│   └── windows_setup_guide.md
+│   ├── windows_setup_guide.md
+│   └── architecture_overview.md
 │
 ├── LICENSE.md               # License
 ├── SECURITY.md              # Security policy
