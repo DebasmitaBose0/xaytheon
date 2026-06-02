@@ -8,13 +8,16 @@
     --button-color: #000000;
     --card-color: #ffffff;
 }
-[data-theme="dark"]{
-    --bg-color: #000000;
-    --text-color: #ffffff;
-    --border-color: #ffffff;
-    --shadow-color: rgba(255, 255, 255, 0.200);
-    --button-color: #ffffff;
-    --card-color: #0d1117;
+[data-theme="dark"] {
+    --bg-color: #0d1117;            /* softer dark — GitHub-style dark background */
+    --text-color: #e6edf3;          /* off-white for reduced eye strain */
+    --border-color: rgba(240,246,252,0.15); /* subtle border visible in dark */
+    --shadow-color: rgba(0, 0, 0, 0.6);     /* stronger shadow for depth */
+    --button-color: #e6edf3;
+    --card-color: #161b22;          /* elevated surface above bg */
+    --card-border: rgba(240,246,252,0.12);  /* card-specific border variable */
+    --input-bg: #21262d;            /* readable input fields in dark */
+    --muted-color: rgba(230,237,243,0.55);  /* muted text for secondary info */
 }
 @font-face {
     font-family: 'OriginTech';
@@ -48,6 +51,8 @@
 
 html {
     scroll-behavior: smooth;
+    /* Smooth color transitions when toggling dark/light theme */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
@@ -56,6 +61,7 @@ body {
     color: var(--text-color);
     overflow-x: hidden;
     line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Apply Eightgon font on the dedicated dashboard page */
@@ -385,16 +391,17 @@ body.eightgon-page {
 .btn-outline {
     background: transparent;
     color: var(--button-color);
-    opacity: 50%;
-    border: 1px solid #000000;
+    opacity: 0.75;
+    border: 1px solid var(--border-color); /* was hardcoded #000, invisible in dark mode */
     padding: 10px 20px;
     font-size: 0.9em;
+    transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
 }
 
 .btn-outline:hover {
-    background: #000000;
-    color: #ffffff;
-    opacity: 100%;
+    background: var(--button-color);
+    color: var(--bg-color);
+    opacity: 1;
 }
 
 /* Section Styles */
@@ -698,13 +705,14 @@ section {
         left: -100%;
         top: 70px;
         flex-direction: column;
-        background-color: rgba(255, 255, 255, 0.95);
+        background-color: var(--bg-color); /* was hardcoded white, broken in dark mode */
         backdrop-filter: blur(10px);
         width: 100%;
         text-align: center;
-        transition: 0.3s;
-        box-shadow: 0 10px 2px var(--shadow-color);
+        transition: left 0.3s ease, background-color 0.3s ease;
+        box-shadow: 0 10px 20px var(--shadow-color);
         padding: 20px 0;
+        border-bottom: 1px solid var(--border-color);
     }
 
     .nav-menu.active {
