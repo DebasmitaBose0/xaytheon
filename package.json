@@ -1,0 +1,24 @@
+{
+  "name": "xaytheon",
+  "version": "1.0.0",
+  "description": "Selected in Social Winter of Code (SWoC)\r <img width=\"1300\" height=\"400\" alt=\"image\" src=\"https://github.com/user-attachments/assets/6bf856a4-0da4-4505-a433-f54797283dc4\" />",
+  "main": "auth.js",
+  "scripts": {
+    "start": "npx servor . index.html 8080",
+    "dev": "npx servor . index.html 8080 --reload",
+    "lint": "npx eslint .",
+    "format": "npx prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DebasmitaBose0/xaytheon.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/DebasmitaBose0/xaytheon/issues"
+  },
+  "homepage": "https://github.com/DebasmitaBose0/xaytheon#readme"
+}
