@@ -293,5 +293,16 @@ window.addEventListener("DOMContentLoaded", function () {
     startExploring();
   });
 
+  // Handle window resize dynamically to update the D3 network center and SVG view dimensions
+  var resizeTimeout;
+  window.addEventListener("resize", function () {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(function () {
+      if (Object.keys(nodesById).length > 0) {
+        renderGraph();
+      }
+    }, 200);
+  });
+
   startExploring();
 });
