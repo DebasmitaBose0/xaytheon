@@ -41,8 +41,21 @@ function getInitial(email) {
 // Returns the user object, or null if nobody is logged in.
 // "async" means this function contacts the server and waits for a reply.
 async function getCurrentUser() {
-  var result = await sb.auth.getUser();
-  return result.data.user;  // null if not logged in
+  try {
+    var result = await sb.auth.getUser();
+    if (result.error) {
+      console.warn('Session check warning:', result.error.message);
+      // Auto-logout if token is invalid or expired
+      if (result.error.status === 401 || result.error.message.indexOf('invalid') > -1 || result.error.message.indexOf('expired') > -1) {
+        await sb.auth.signOut();
+      }
+      return null;
+    }
+    return result.data.user;
+  } catch (err) {
+    console.error('Failed to validate session:', err);
+    return null;
+  }
 }
 
 // Update the #auth-area in the navbar based on whether the user is logged in
