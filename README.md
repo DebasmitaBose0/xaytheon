@@ -400,3 +400,87 @@ Each page focuses on a specific aspect of the GitHub ecosystem while maintaining
 ## Summary
 
 **Xaytheon** is essentially a **GitHub intelligence and discovery platform** that transforms how developers interact with the open-source ecosystem. It combines personal analytics, community trends, and advanced exploration tools into a unified interface, making it easier to navigate GitHub's vast repository landscape, discover meaningful projects, and track your open-source journey.
+
+---
+
+## 🔐 GitHub OAuth Setup Guide
+
+Xaytheon supports **"Login with GitHub"** via OAuth. Follow these steps to enable it:
+
+### Step 1 — Create a GitHub OAuth App
+
+1. Go to [GitHub Developer Settings → OAuth Apps](https://github.com/settings/developers)
+2. Click **"New OAuth App"**
+3. Fill in the details:
+
+| Field | Value |
+|---|---|
+| **Application name** | `Xaytheon Local` (or any name) |
+| **Homepage URL** | `http://127.0.0.1:5500` |
+| **Authorization callback URL** | `http://127.0.0.1:5500/index.html` |
+
+4. Click **"Register application"**
+5. Copy your **Client ID** and generate a **Client Secret**
+
+### Step 2 — Add Credentials to Your .env
+
+```env
+GITHUB_CLIENT_ID=your_client_id_here
+GITHUB_CLIENT_SECRET=your_client_secret_here
+```
+
+> **⚠️ Security Warning:** Never commit your `GITHUB_CLIENT_SECRET` to version control. Always use `.env` files which are listed in `.gitignore`.
+
+### Step 3 — Verify CORS Origin
+
+Make sure `FRONTEND_URL` in `backend/.env` matches your frontend's origin exactly:
+
+```env
+FRONTEND_URL=http://127.0.0.1:5500
+```
+
+---
+
+## ⚡ GitHub API Rate Limits
+
+Xaytheon queries the GitHub public Search API. Understanding rate limits helps you avoid unexpected failures.
+
+### Unauthenticated Requests (Default)
+
+| Endpoint | Limit |
+|---|---|
+| Search API (`/search/repositories`) | **10 requests/minute** |
+| Core API (user, repos) | **60 requests/hour** |
+
+### Authenticated Requests (with a token)
+
+| Endpoint | Limit |
+|---|---|
+| Search API | **30 requests/minute** |
+| Core API | **5,000 requests/hour** |
+
+### How to Check Your Current Rate Limit
+
+```bash
+curl -s https://api.github.com/rate_limit | node -e "
+  const d = require('fs').readFileSync('/dev/stdin','utf8');
+  const r = JSON.parse(d).resources;
+  console.log('Search:', r.search.remaining + '/' + r.search.limit, '— resets at', new Date(r.search.reset*1000).toLocaleTimeString());
+  console.log('Core:  ', r.core.remaining + '/' + r.core.limit, '— resets at', new Date(r.core.reset*1000).toLocaleTimeString());
+"
+```
+
+### Strategies to Avoid Rate Limiting
+
+1. **Use the built-in cache** — `community.js` caches search results for 5 minutes. Repeated searches within that window use cached data.
+2. **Reduce `per_page`** — Lower the "Repos to sample" setting on the Explore page to reduce API call frequency.
+3. **Avoid rapid re-searches** — Wait at least 60 seconds between consecutive searches on the Community page.
+4. **Add a GitHub token (advanced)** — You can optionally inject a `Authorization: token YOUR_PAT` header by adding `GITHUB_TOKEN=your_pat` to `backend/.env` and using it in your backend proxy route.
+
+### Rate Limit Error Messages
+
+When you hit the rate limit, you'll see:
+
+> `GitHub rate limit reached. Please wait a few minutes and try again.`
+
+This is handled gracefully in both `community.js` and `explore.js`. Simply wait ~1 minute and retry.
