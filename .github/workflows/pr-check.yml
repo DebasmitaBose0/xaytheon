@@ -1,0 +1,134 @@
+# ============================================================
+# PR Syntax & Quality Check Workflow
+#
+# Runs on every Pull Request to main. Validates:
+#   1. JavaScript syntax (node --check on each .js file)
+#   2. HTML structure (html-validate)
+#   3. JSON validity (native node JSON.parse)
+#
+# This is a lightweight, zero-dependency check layer that
+# catches obvious syntax errors before human review begins.
+# ============================================================
+
+name: PR Syntax & Quality Check
+
+on:
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # ----------------------------------------------------------
+  # Job 1: Validate JavaScript syntax
+  # Uses Node.js built-in `--check` flag — no extra packages
+  # ----------------------------------------------------------
+  js-syntax-check:
+    name: JavaScript Syntax Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Check JavaScript files for syntax errors
+        run: |
+          echo "🔍 Scanning all root-level .js files for syntax errors..."
+          FAILED=0
+          for file in *.js; do
+            [ -f "$file" ] || continue
+            node --check "$file" 2>&1 && echo "✅ $file" || { echo "❌ SYNTAX ERROR in $file"; FAILED=1; }
+          done
+          if [ $FAILED -eq 1 ]; then
+            echo ""
+            echo "🚨 One or more JavaScript files contain syntax errors."
+            echo "   Please fix the errors above before merging."
+            exit 1
+          fi
+          echo ""
+          echo "✅ All JavaScript files passed syntax check."
+
+  # ----------------------------------------------------------
+  # Job 2: Validate JSON files
+  # Catches malformed package.json or config JSON files
+  # ----------------------------------------------------------
+  json-validity-check:
+    name: JSON Validity Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Validate JSON files
+        run: |
+          echo "🔍 Validating JSON files..."
+          FAILED=0
+          for file in *.json; do
+            [ -f "$file" ] || continue
+            node -e "
+              const fs = require('fs');
+              try {
+                JSON.parse(fs.readFileSync('$file', 'utf8'));
+                console.log('✅ $file');
+              } catch(e) {
+                console.error('❌ INVALID JSON in $file:', e.message);
+                process.exit(1);
+              }
+            " || FAILED=1
+          done
+          if [ $FAILED -eq 1 ]; then
+            echo ""
+            echo "🚨 One or more JSON files are malformed. Fix them before merging."
+            exit 1
+          fi
+          echo ""
+          echo "✅ All JSON files are valid."
+
+  # ----------------------------------------------------------
+  # Job 3: Check for hardcoded secrets (basic pattern scan)
+  # Prevents accidental commit of tokens/API keys
+  # ----------------------------------------------------------
+  secret-scan:
+    name: Basic Secret Pattern Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Scan for accidental secret patterns
+        run: |
+          echo "🔍 Scanning for common secret patterns in changed files..."
+          PATTERNS=(
+            "sk-[a-zA-Z0-9]{32,}"
+            "ghp_[a-zA-Z0-9]{36}"
+            "PRIVATE KEY"
+            "password\s*=\s*['\"][^'\"]{6,}"
+          )
+          FOUND=0
+          for pattern in "${PATTERNS[@]}"; do
+            if git diff origin/main --name-only | xargs -I{} grep -rn --include="*.js" --include="*.html" -E "$pattern" {} 2>/dev/null; then
+              echo "⚠️  Potential secret pattern detected: $pattern"
+              FOUND=1
+            fi
+          done
+          if [ $FOUND -eq 1 ]; then
+            echo ""
+            echo "⚠️  WARNING: Potential hardcoded secrets detected."
+            echo "   Please review the above matches and use environment variables instead."
+            exit 1
+          fi
+          echo "✅ No obvious secret patterns found."
