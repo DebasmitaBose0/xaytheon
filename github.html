@@ -16,14 +16,14 @@
         <a class="logo" href="index.html" aria-label="Back to Home">
           <img class="logo-img" src="assets/logo/thelogo.png" alt="XAYTHEON logo" />
         </a>
-        <ul class="nav-menu">
+        <ul class="nav-menu" id="nav-menu">
           <li><a class="nav-link" href="index.html">Home</a></li>
           <li><a class="nav-link" href="community.html">Community Highlights</a></li>
           <li><a class="nav-link" href="explore.html">Explore by Topic</a></li>
           <li><a class="nav-link" href="contributions.html">Contributions</a></li>
         </ul>
         <button id="theme-toggle" class="btn btn-primary" style="margin:0px important!"></button>
-        <div class="hamburger" id="hamburger-menu" aria-label="Toggle navigation menu" role="button" tabindex="0">
+        <div class="hamburger" id="hamburger-menu" aria-label="Toggle navigation menu" role="button" tabindex="0" aria-controls="nav-menu">
           <span class="bar"></span>
           <span class="bar"></span>
           <span class="bar"></span>
@@ -172,11 +172,21 @@
     const navMenu = document.querySelector('.nav-menu');
 
     if (hamburger && navMenu) {
-        hamburger.addEventListener('click', () => {
+        function toggleMenu() {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
-            const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+            const expanded = hamburger.getAttribute('aria-expanded') === 'true';
             hamburger.setAttribute('aria-expanded', !expanded);
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+
+        // Keyboard support: Enter and Space toggle the menu
+        hamburger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleMenu();
+            }
         });
 
         // Close menu when clicking a link
