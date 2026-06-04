@@ -2,6 +2,13 @@
 
 This document provides a deep architectural breakdown of the Xaytheon platform, explaining the frontend pipeline, interactive 3D rendering loops, state management strategies, API interactions, and local persistence.
 
+## Table of Contents
+
+- [1. High-Level Architectural Flow](#1-high-level-architectural-flow)
+- [2. Component Decoupling & Directory Map](#2-component-decoupling--directory-map)
+- [3. 3D Graphics Pipeline (Three.js Loop)](#3-3d-graphics-pipeline-threejs-loop)
+- [4. API Caching & Rate-Limit Resiliency](#4-api-caching--rate-limit-resiliency)
+
 ---
 
 ## 1. High-Level Architectural Flow

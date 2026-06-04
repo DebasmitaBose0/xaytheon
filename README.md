@@ -398,6 +398,15 @@ Each page focuses on a specific aspect of the GitHub ecosystem while maintaining
 
 ---
 
+## 📖 Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Architecture Overview](docs/architecture_overview.md) | Deep architectural breakdown — rendering pipeline, API caching, state management |
+| [Contribution Guide](CONTRIBUTION.md) | How to contribute to Xaytheon |
+
+---
+
 ## Summary
 
 **Xaytheon** is essentially a **GitHub intelligence and discovery platform** that transforms how developers interact with the open-source ecosystem. It combines personal analytics, community trends, and advanced exploration tools into a unified interface, making it easier to navigate GitHub's vast repository landscape, discover meaningful projects, and track your open-source journey.
